@@ -4,7 +4,6 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import java.util.Arrays;
 import javax.swing.JOptionPane;
-import raven.toast.Notifications;
 
 public class NotesPanel extends javax.swing.JPanel {
 
@@ -101,6 +100,7 @@ public class NotesPanel extends javax.swing.JPanel {
 
         jPanel1.setBackground(java.awt.Color.black);
 
+        VaultNameLabel.setForeground(java.awt.Color.white);
         VaultNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         VaultNameLabel.setText("jLabel2");
 
@@ -284,12 +284,8 @@ public class NotesPanel extends javax.swing.JPanel {
             FileManager.saveFile(currentFile);
 
         } catch (IOException ex) {
-            //If it cant then display show an error notifcation to the user
-            Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT, "Could not save note");
-        } finally {
-            //Otherwise display a success notification to the user
-            Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, "Sucessfully saved the note");
-        }
+           
+        } 
     }//GEN-LAST:event_SaveButtonActionPerformed
 
     //The runs when the user wants to go back to the vault page
@@ -308,13 +304,8 @@ public class NotesPanel extends javax.swing.JPanel {
 
             //Reloads the Vault's files
             VaultManager.loadFiles();
-
-            //Sends a notification to the user that the deletion was a success
-            Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, "Sucessfully deleted the note");
         } catch (IOException ex) {
-            //Otherwise, send a notification to the user that the deletion was not successful.
-            Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT, "Could not delete note");
-
+         
         } finally {
             //Resets the screen
             reset();
@@ -339,9 +330,7 @@ public class NotesPanel extends javax.swing.JPanel {
             //Adds the file to the vault's files
             VaultManager.addFile(currentFile);
 
-            Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, "Sucessfully created the note");
         } catch (IOException ex) {
-            Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT, "Could not create the note");
         } finally {
             //Adds the note name to the note list results model
             noteListModel.addElement(newNoteName);

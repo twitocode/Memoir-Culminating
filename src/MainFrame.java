@@ -1,7 +1,3 @@
-
-import com.formdev.flatlaf.intellijthemes.FlatArcDarkIJTheme;
-import raven.toast.Notifications;
-
 public class MainFrame extends javax.swing.JFrame {
 
     //Placeholder variable for each panel
@@ -24,10 +20,6 @@ public class MainFrame extends javax.swing.JFrame {
         //Displays the vault panel on the screen
         Parent.repaint();
         Parent.revalidate();
-
-        //Sets the notifcation popup frame to this.
-        //This is an external library
-        Notifications.getInstance().setJFrame(this);
     }
 
     //A function that depending on which panel is chosen as a parameter, will switch
@@ -117,10 +109,6 @@ public class MainFrame extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        //Custom Look and feel for swing, the default was ugly.
-        //This is an external library
-        FlatArcDarkIJTheme.setup();
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
