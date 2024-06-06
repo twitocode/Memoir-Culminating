@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import java.util.List;
+import raven.toast.Notifications;
 
 public class SearchPanel extends javax.swing.JPanel {
 
@@ -128,6 +129,8 @@ public class SearchPanel extends javax.swing.JPanel {
             //Searches for results with the query and sets the searchResults variable to the output
             searchResults = FileManager.searchAllFiles(query);
         } catch (IOException ex) {
+            //Otherwise, send a error notificatio.
+            Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT, "Searching files failed");
         }
 
         searchResultsListModel.removeAllElements();

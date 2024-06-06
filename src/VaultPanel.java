@@ -2,6 +2,7 @@
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import raven.toast.Notifications;
 
 public class VaultPanel extends javax.swing.JPanel {
 
@@ -49,7 +50,7 @@ public class VaultPanel extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel1.setForeground(java.awt.Color.black);
+        jLabel1.setForeground(java.awt.Color.white);
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Vaults");
 
@@ -139,6 +140,9 @@ public class VaultPanel extends javax.swing.JPanel {
 
         //Adds the vault to the tracked vault list
         VaultManager.addVault(newVaultName);
+        
+        //Sends a notification popup to the user that the vault was created
+        Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, "Sucessfully created vault");
     }//GEN-LAST:event_CreateVaultButtonActionPerformed
 
     //Runs when the user clicks a vault
