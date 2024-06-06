@@ -1,48 +1,81 @@
 
 import com.formdev.flatlaf.intellijthemes.FlatArcDarkIJTheme;
+import raven.toast.Notifications;
 
 public class MainFrame extends javax.swing.JFrame {
 
+    //Placeholder variable for each panel
     NotesPanel notesPanel;
     VaultPanel vaultPanel;
+    SearchPanel searchPanel;
 
     public MainFrame() {
+        //These panels act as pages like on a website
+        //The MainFrame is the container for each of the panels.
         vaultPanel = new VaultPanel(this);
         notesPanel = new NotesPanel(this);
+        searchPanel = new SearchPanel(this);
 
         initComponents();
 
-        Parent.removeAll();
-
+        //Sets the defualt panel to the vault panel
         Parent.add(vaultPanel);
 
+        //Displays the vault panel on the screen
         Parent.repaint();
         Parent.revalidate();
+
+        //Sets the notifcation popup frame to this.
+        //This is an external library
+        Notifications.getInstance().setJFrame(this);
     }
 
+    //A function that depending on which panel is chosen as a parameter, will switch
+    //to said panel.
     public void setPanel(String name) {
         switch (name) {
-            case "Notes":
+            case "Notes" -> {
+                //Removes any previus panels
                 Parent.removeAll();
 
                 Parent.add(notesPanel);
 
                 Parent.repaint();
                 Parent.revalidate();
+
+                //Any code that i want run when the panel is added back to the screen will be ran in this function.
                 notesPanel.onInit();
-                break;
-            case "Vault":
+            }
+            case "Vaults" -> {
                 Parent.removeAll();
 
-                Parent.add(notesPanel);
+                Parent.add(vaultPanel);
 
                 Parent.repaint();
                 Parent.revalidate();
                 vaultPanel.onInit();
-                break;
-            default:
+            }
+            case "Search" -> {
+                Parent.removeAll();
+
+                Parent.add(searchPanel);
+                Parent.repaint();
+                Parent.revalidate();
+                searchPanel.onInit();
+            }
+            //Only will run if I did not choose a proper panel
+            default ->
                 System.out.println("Panel not chosen");
         }
+    }
+
+    //This is a special version of the setPanel function.
+    //This one is used when the user clicks on a search result on the search page
+    //This will display the file that was chosen in the search on the notesPanel screen.
+    //Instead of displaying "No note chosen"
+    public void setNotesPanelWithResult(JournalFile result) {
+        notesPanel.currentFile = result;
+        setPanel("Notes");
     }
 
     /**
@@ -62,6 +95,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Memoir");
+        setResizable(false);
 
         Parent.setLayout(new java.awt.CardLayout());
 
@@ -83,6 +117,8 @@ public class MainFrame extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        //Custom Look and feel for swing, the default was ugly.
+        //This is an external library
         FlatArcDarkIJTheme.setup();
 
         /* Create and display the form */

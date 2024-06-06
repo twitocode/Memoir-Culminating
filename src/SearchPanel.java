@@ -5,15 +5,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
-import java.util.Arrays;
 import java.util.List;
-import javax.swing.JOptionPane;
 import raven.toast.Notifications;
 
 public class SearchPanel extends javax.swing.JPanel {
 
+    //The Frame that this class belongs to, set at startup in the constructor
     MainFrame ParentFrame;
+
+    //Load serach results into this list to then display
     DefaultListModel searchResultsListModel = new DefaultListModel();
+
+    //Where all of the search results are
     List<JournalFile> searchResults = new ArrayList<JournalFile>();
 
     public SearchPanel(MainFrame parent) {
@@ -21,11 +24,13 @@ public class SearchPanel extends javax.swing.JPanel {
 
         ParentFrame = parent;
 
+        //Calls the onInit function
         onInit();
-        SearchList.setModel(searchResultsListModel);
     }
 
     public void onInit() {
+        //Lists in swing use a model to get the data from. This sets the SearchResultList model to the search result model
+        SearchList.setModel(searchResultsListModel);
     }
 
     @SuppressWarnings("unchecked")
@@ -114,36 +119,53 @@ public class SearchPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    //Runs whenever the user pressed enter in the search bar
     private void SearchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchFieldActionPerformed
+        //Gets the query from the the user
         String query = SearchField.getText();
 
+        //Tries to search for results
         try {
+            //Searches for results with the query and sets the searchResults variable to the output
             searchResults = FileManager.searchAllFiles(query);
         } catch (IOException ex) {
-            Logger.getLogger(SearchPanel.class.getName()).log(Level.SEVERE, null, ex);
+            //Otherwise, send a error notificatio.
+            Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT, "Searching files failed");
         }
 
+        searchResultsListModel.removeAllElements();
         searchResults.forEach(x -> {
             searchResultsListModel.addElement(x.name);
         });
     }//GEN-LAST:event_SearchFieldActionPerformed
 
+    //Runs wheneveer the user presses a searc result
     private void SearchListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SearchListMouseClicked
         JList source = (JList) evt.getSource();
+
+        //Gets the name of the note chosen
         String selectedNote = source.getSelectedValue().toString();
 
+        //Sortes through each of the search results
         for (JournalFile result : searchResults) {
+            //If the name of the result is equal to the name chosen
             if (result.name.equals(selectedNote)) {
-                VaultManager.current = result.vault;
+
+                //Sets the current vault with the chosen note's vault
+                VaultManager.setCurrentVault(result.vault);
+
+                //Goes to the notes panel with the currentFile chosen
                 ParentFrame.setNotesPanelWithResult(result);
             }
         }
     }//GEN-LAST:event_SearchListMouseClicked
 
+    //Takes the user back to the vault page
     private void BackToVaultsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackToVaultsButtonActionPerformed
         ParentFrame.setPanel("Vaults");
     }//GEN-LAST:event_BackToVaultsButtonActionPerformed
 
+    //Takes the user back to the notes page
     private void BackToNotesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackToNotesButtonActionPerformed
         ParentFrame.setPanel("Notes");
     }//GEN-LAST:event_BackToNotesButtonActionPerformed
