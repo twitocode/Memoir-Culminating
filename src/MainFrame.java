@@ -6,7 +6,6 @@ This class is the main frame that renders the program
 It hands changing between the 3 panels (Vault, Notes, and Search) for a page-lke experience
  */
 import com.formdev.flatlaf.IntelliJTheme;
-import com.formdev.flatlaf.intellijthemes.FlatArcDarkIJTheme;
 import raven.toast.Notifications;
 
 public class MainFrame extends javax.swing.JFrame {
@@ -126,7 +125,6 @@ public class MainFrame extends javax.swing.JFrame {
     public static void main(String args[]) {
         //Custom Look and feel for swing, the default was ugly.
         //This is an external library
-        //FlatArcDarkIJTheme.setup();
         IntelliJTheme.setup(MainFrame.class.getResourceAsStream("/ristretto.theme.json"));
 
         /* Create and display the form */

@@ -163,8 +163,14 @@ public class VaultPanel extends javax.swing.JPanel {
         //Adds the vault to the tracked vault list
         VaultManager.addVault(newVaultName);
 
+        //Sets the current vault to the newly created vault
+        VaultManager.setCurrentVaultByName(newVaultName);
+
         //Sends a notification popup to the user that the vault was created
         Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, "Sucessfully created vault");
+
+        //Goes to the notes page
+        ParentFrame.setPanel("Notes");
     }//GEN-LAST:event_CreateVaultButtonActionPerformed
 
     //Runs when the user clicks a vault

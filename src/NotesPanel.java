@@ -247,6 +247,11 @@ public class NotesPanel extends javax.swing.JPanel {
 
     //This runs whenever the user clicks a note
     private void NotesListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NotesListMouseClicked
+        //Prevents read errors by making sure that there are actually notes in the vault first
+        if (noteListModel.isEmpty()) {
+            return;
+        }
+
         JList source = (JList) evt.getSource();
         //Gets the notes name
         String selectedNote = source.getSelectedValue().toString();
