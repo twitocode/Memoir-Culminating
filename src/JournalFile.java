@@ -1,4 +1,9 @@
+/*
+Toheeb Eji
+June 7, 2024
 
+This class is reponsible for describing what a note is
+ */
 import java.util.List;
 
 //This file is used for representing a Journal note that the user can interact with

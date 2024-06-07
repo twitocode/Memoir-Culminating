@@ -1,4 +1,11 @@
+/*
+Toheeb Eji
+June 7, 2024
 
+This class is manaages all vault related operations
+Stores what the current vault is and all the available vaults
+It has operations that the vault uses.
+ */
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

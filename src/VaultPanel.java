@@ -1,3 +1,9 @@
+/*
+Toheeb Eji
+June 7, 2024
+
+This class is responsible for displaying all the vaults that the user has.
+ */
 
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -140,7 +146,7 @@ public class VaultPanel extends javax.swing.JPanel {
 
         //Adds the vault to the tracked vault list
         VaultManager.addVault(newVaultName);
-        
+
         //Sends a notification popup to the user that the vault was created
         Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, "Sucessfully created vault");
     }//GEN-LAST:event_CreateVaultButtonActionPerformed

@@ -1,4 +1,9 @@
+/*
+Toheeb Eji
+June 7, 2024
 
+This class is responsible for listing notes, and allowing the user to manipulate notes
+ */
 import java.io.IOException;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -309,7 +314,7 @@ public class NotesPanel extends javax.swing.JPanel {
 
             //Reloads the Vault's files
             VaultManager.loadFiles();
-            
+
             //Sends a notification to the user that the deletion was a success
             Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, "Sucessfully deleted the note");
         } catch (IOException ex) {

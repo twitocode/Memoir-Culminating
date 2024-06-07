@@ -1,8 +1,12 @@
+/*
+Toheeb Eji
+June 7, 2024
 
+This class is responsible for allowing the user to search for any note in
+all of their vaults at once.
+ */
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import java.util.List;
@@ -31,6 +35,17 @@ public class SearchPanel extends javax.swing.JPanel {
     public void onInit() {
         //Lists in swing use a model to get the data from. This sets the SearchResultList model to the search result model
         SearchList.setModel(searchResultsListModel);
+
+        //If the user went from the vault page straight to the notes page, then
+        //dont allow them to go back to the notes page. Because they havene't actually
+        //Selected a vault.
+        if (VaultManager.get() == null) {
+            BackToNotesButton.setEnabled(false);
+            BackToNotesButton.setText("");
+        } else {
+            BackToNotesButton.setEnabled(true);
+            BackToNotesButton.setText("Back to Notes");
+        }
     }
 
     @SuppressWarnings("unchecked")

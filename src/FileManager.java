@@ -1,3 +1,11 @@
+/*
+Toheeb Eji
+June 7, 2024
+
+This class is manaages any file related operations.
+Such as saving, creating, deleteing files
+And searching for files.
+ */
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -12,7 +20,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
-//This class manaages any file related operations
 public class FileManager {
 
     //Creates a vault with the specified name in the "Vaults" folder

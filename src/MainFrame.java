@@ -1,3 +1,10 @@
+/*
+Toheeb Eji
+June 7, 2024
+
+This class is the main frame that renders the program
+It hands changing between the 3 panels (Vault, Notes, and Search) for a page-lke experience
+ */
 import com.formdev.flatlaf.intellijthemes.FlatArcDarkIJTheme;
 import raven.toast.Notifications;
 
@@ -23,8 +30,8 @@ public class MainFrame extends javax.swing.JFrame {
         //Displays the vault panel on the screen
         Parent.repaint();
         Parent.revalidate();
-        
-         //Sets the notifcation popup frame to this.
+
+        //Sets the notifcation popup frame to this.
         //This is an external library
         Notifications.getInstance().setJFrame(this);
     }
@@ -119,7 +126,7 @@ public class MainFrame extends javax.swing.JFrame {
         //Custom Look and feel for swing, the default was ugly.
         //This is an external library
         FlatArcDarkIJTheme.setup();
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

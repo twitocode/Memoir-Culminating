@@ -1,3 +1,9 @@
+/*
+Toheeb Eji
+June 7, 2024
+
+This class is stores what a Vault is, and loads its notes.
+ */
 
 import java.io.IOException;
 import java.util.ArrayList;
