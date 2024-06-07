@@ -3,8 +3,8 @@ Toheeb Eji
 June 7, 2024
 
 This class is manaages any file related operations.
-Such as saving, creating, deleteing files
-And searching for files.
+Such as saving, creating, deleteing notes
+And searching for notes.
  */
 
 import java.io.BufferedReader;
@@ -28,7 +28,7 @@ public class FileManager {
     }
 
     //Finds the names of all the vaults in the "Vaults" folder and sorts them by last modified
-    public static List<String> loadVaults() {
+    public static List<String> loadVaultNames() {
 
         var directoryPath = new File("Vaults");
 
@@ -47,11 +47,11 @@ public class FileManager {
                 .reversed();
     }
 
-    //Loads all of the files of a vault given the vault name
-    public static List<String> loadVaultFiles(String vaultName) {
+    //Loads all of the notes of a vault given the vault name
+    public static List<String> loadVaultFileNames(String vaultName) {
         var directoryPath = new File("Vaults/" + vaultName);
 
-        //Lists all of the files in the vault's folder.
+        //Lists all of the notes in the vault's folder.
         File[] files = directoryPath.listFiles();
 
         //Sorts the List<Files> by the last modified date
@@ -86,63 +86,63 @@ public class FileManager {
         return list;
     }
 
-    //Saves a file give a JournalFile instance
-    public static void saveFile(JournalFile file) throws IOException {
+    //Saves a note given a JournalNote instance
+    public static void saveFile(JournalNote note) throws IOException {
         //Creates a new file writer.
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("Vaults/" + file.vault.name + "/" + file.name))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("Vaults/" + note.vault.name + "/" + note.name))) {
             //For every line in the notes contents, write that line to the file
-            for (String line : file.contents) {
+            for (String line : note.contents) {
                 writer.write(line);
             }
         }
     }
 
-    //Deletes the file with the given JournalFile instance
-    public static void deleteFile(JournalFile file) throws IOException {
-        new File("Vaults/" + file.vault.name + "/" + file.name).delete();
+    //Deletes the file with the given JournalNote instance
+    public static void deleteFile(JournalNote note) throws IOException {
+        new File("Vaults/" + note.vault.name + "/" + note.name).delete();
     }
 
-    //Creates a file with a given name
-    public static JournalFile createFile(String fileName) throws IOException {
+    //Creates a file with a given name and returns a JournalNote instance
+    public static JournalNote createFile(String fileName) throws IOException {
         //Gets the current vault's name
         String vaultName = VaultManager.getName();
 
         //Creates a new file in the vault's folder with the givene name
         new File("Vaults/" + vaultName + "/" + fileName.trim()).createNewFile();
 
-        //returns a new JournalFile instance for use.
-        return new JournalFile(fileName, new ArrayList<String>(), VaultManager.get());
+        //returns a new JournalNote instance for use.
+        return new JournalNote(fileName, new ArrayList<>(), VaultManager.get());
     }
 
     //There is probably i nicer way to do this
-    //This searches every vault for files that have a name that contains the query
-    public static List<JournalFile> searchAllFiles(String query) throws IOException {
+    //This searches every vault for notes that have a name that contains the query
+    public static List<JournalNote> findAllFilesWithQuery(String query) throws IOException {
         //Stores the search results
-        var results = new ArrayList<JournalFile>();
+        var results = new ArrayList<JournalNote>();
 
         var directoryPath = new File("Vaults");
         //Gets every vault in the "Vaults" folder
         File[] vaultFolders = directoryPath.listFiles();
 
         //Loops through every vault
-        for (File vaultPath : vaultFolders) {
-            //Gets every file in the folder, then it converts the array into a list
-            List<File> files = Arrays.asList(vaultPath.listFiles());
+        for (File vaultFolder : vaultFolders) {
+            //Gets every file in the folder, then it converts the resulting array into a list
+            List<File> files = Arrays.asList(vaultFolder.listFiles());
 
-            //If the list is empty, then continue with the next vault folder
+            //If the list is empty, then continue with the next vault-folder
             if (files.isEmpty()) {
                 continue;
             }
 
             //Finds the Vault instance that is assocaited with the vault folder
-            Vault vault = VaultManager.findVaultByName(vaultPath.getName());
+            Vault vault = VaultManager.findVaultByName(vaultFolder.getName());
 
             //If the Vault instance does not exist, then continue with the next one 
             if (vault == null) {
                 continue;
             }
 
-            //This filters throug the list to see which files have a name that contains the search query.
+            //This filters through the list to see which notes have a name that contains the search query.
             //It is case-insensitive
             files = files
                     .stream()
@@ -156,8 +156,8 @@ public class FileManager {
                 //Loads the file contents and stores it in a list of strings
                 List<String> fileContents = loadFileContents("Vaults/" + vault.name + "/" + result.getName());
 
-                //Creates a new JournalFile instance with the file content and the vault it belongs to
-                var searchResult = new JournalFile(result.getName(), fileContents, vault);
+                //Creates a new JournalNote instance with the file's content and the vault it belongs to
+                var searchResult = new JournalNote(result.getName(), fileContents, vault);
 
                 //Adds the search result ot the list of results
                 results.add(searchResult);

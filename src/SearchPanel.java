@@ -21,7 +21,7 @@ public class SearchPanel extends javax.swing.JPanel {
     DefaultListModel searchResultsListModel = new DefaultListModel();
 
     //Where all of the search results are
-    List<JournalFile> searchResults = new ArrayList<JournalFile>();
+    List<JournalNote> searchResults = new ArrayList<JournalNote>();
 
     public SearchPanel(MainFrame parent) {
         initComponents();
@@ -60,21 +60,23 @@ public class SearchPanel extends javax.swing.JPanel {
         BackToNotesButton = new javax.swing.JButton();
         BackToVaultsButton = new javax.swing.JButton();
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Roboto Light", 0, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Search");
 
+        SearchField.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         SearchField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SearchFieldActionPerformed(evt);
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Roboto Light", 0, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Search for any note across all your vaults");
         jLabel2.setToolTipText("");
 
+        SearchList.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         SearchList.setFixedCellHeight(50);
         SearchList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -83,6 +85,7 @@ public class SearchPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(SearchList);
 
+        BackToNotesButton.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         BackToNotesButton.setText("Back to Notes");
         BackToNotesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,6 +93,7 @@ public class SearchPanel extends javax.swing.JPanel {
             }
         });
 
+        BackToVaultsButton.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         BackToVaultsButton.setText("Back to Vaults");
         BackToVaultsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,11 +109,11 @@ public class SearchPanel extends javax.swing.JPanel {
                 .addGap(107, 107, 107)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(BackToVaultsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BackToNotesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(BackToVaultsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(BackToNotesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(SearchField)
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE)
@@ -142,7 +146,7 @@ public class SearchPanel extends javax.swing.JPanel {
         //Tries to search for results
         try {
             //Searches for results with the query and sets the searchResults variable to the output
-            searchResults = FileManager.searchAllFiles(query);
+            searchResults = FileManager.findAllFilesWithQuery(query);
         } catch (IOException ex) {
             //Otherwise, send a error notificatio.
             Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT, "Searching files failed");
@@ -162,7 +166,7 @@ public class SearchPanel extends javax.swing.JPanel {
         String selectedNote = source.getSelectedValue().toString();
 
         //Sortes through each of the search results
-        for (JournalFile result : searchResults) {
+        for (JournalNote result : searchResults) {
             //If the name of the result is equal to the name chosen
             if (result.name.equals(selectedNote)) {
 

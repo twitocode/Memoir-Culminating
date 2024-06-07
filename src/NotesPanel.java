@@ -19,8 +19,8 @@ public class NotesPanel extends javax.swing.JPanel {
     //Load notes into this list to then display
     DefaultListModel noteListModel = new DefaultListModel();
 
-    //A variable that tracks the current file in the editor
-    JournalFile currentFile;
+    //A variable that tracks the current Note in the editor
+    JournalNote currentNote;
 
     public NotesPanel(MainFrame parent) {
         initComponents();
@@ -40,23 +40,23 @@ public class NotesPanel extends javax.swing.JPanel {
             //dispays the vault name on the screen
             VaultNameLabel.setText(VaultManager.getName());
 
-            //Loops through every file in the current vault
+            //Loops through every note in the current vault
             for (var file : VaultManager.getFiles()) {
-                //Ads the file's name to the model to display it to the user
+                //Adds the note's name to the model to display it to the user
                 noteListModel.addElement(file.name);
             }
 
-            //currentFile would have been set if i completed searching, which would set the currentFile at the start
-            if (currentFile != null) {
+            //currentNote would have been set if i completed searching, which would set the currentNote at the start
+            if (currentNote != null) {
                 //StringBuilders are better than strings when repedelty adding text to a String
                 StringBuilder builder = new StringBuilder();
 
-                //Goes through every line of the current file chosen and adds it to the builder
-                for (String line : currentFile.contents) {
+                //Goes through every line of the current note chosen and adds it to the builder
+                for (String line : currentNote.contents) {
                     builder.append(line);
                 }
 
-                NoteNameLabel.setText(currentFile.name);
+                NoteNameLabel.setText(currentNote.name);
 
                 //The builder outputs a string to user. This string is the file contents
                 //That the user typed in
@@ -77,7 +77,7 @@ public class NotesPanel extends javax.swing.JPanel {
     //This function sets everything to the defualt state of (No note chosen)
     //Removes controls until the user clicks a note
     private void reset() {
-        currentFile = null;
+        currentNote = null;
         NoteNameLabel.setText("No note chosen");
         NoteContentsField.setEnabled(false);
         NoteContentsField.setText("");
@@ -104,18 +104,15 @@ public class NotesPanel extends javax.swing.JPanel {
         DeleteButton = new javax.swing.JButton();
         SearchButton = new javax.swing.JButton();
 
-        jPanel1.setBackground(java.awt.Color.black);
-
         VaultNameLabel.setForeground(java.awt.Color.white);
         VaultNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        VaultNameLabel.setText("jLabel2");
 
-        VaultName1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        VaultName1.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
         VaultName1.setForeground(java.awt.Color.white);
         VaultName1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         VaultName1.setText("Notes");
 
-        NotesList.setBackground(java.awt.Color.black);
+        NotesList.setFont(new java.awt.Font("Roboto Medium", 0, 12)); // NOI18N
         NotesList.setForeground(java.awt.Color.white);
         NotesList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -130,7 +127,7 @@ public class NotesPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(NotesList);
 
-        ReturnToVaultButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        ReturnToVaultButton.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
         ReturnToVaultButton.setText("Back to Vaults");
         ReturnToVaultButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -176,15 +173,15 @@ public class NotesPanel extends javax.swing.JPanel {
                 .addGap(20, 20, 20))
         );
 
-        NoteNameLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        NoteNameLabel.setFont(new java.awt.Font("Roboto Light", 0, 24)); // NOI18N
         NoteNameLabel.setText("No note selected");
 
         NoteContentsField.setColumns(20);
-        NoteContentsField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        NoteContentsField.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         NoteContentsField.setRows(5);
         jScrollPane2.setViewportView(NoteContentsField);
 
-        SaveButton.setBackground(new java.awt.Color(51, 153, 0));
+        SaveButton.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.focusedBorderColor"));
         SaveButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         SaveButton.setForeground(java.awt.Color.white);
         SaveButton.setText("Save");
@@ -194,7 +191,7 @@ public class NotesPanel extends javax.swing.JPanel {
             }
         });
 
-        DeleteButton.setBackground(java.awt.Color.red);
+        DeleteButton.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Red"));
         DeleteButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         DeleteButton.setForeground(java.awt.Color.white);
         DeleteButton.setText("Delete");
@@ -204,8 +201,9 @@ public class NotesPanel extends javax.swing.JPanel {
             }
         });
 
-        SearchButton.setBackground(java.awt.Color.white);
-        SearchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/icons8-search-30.png"))); // NOI18N
+        SearchButton.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        SearchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/icons8-search-30 (1).png"))); // NOI18N
+        SearchButton.setText("Search");
         SearchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SearchButtonActionPerformed(evt);
@@ -223,7 +221,7 @@ public class NotesPanel extends javax.swing.JPanel {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
                     .addComponent(NoteNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(SearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(SearchButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(SaveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -243,7 +241,7 @@ public class NotesPanel extends javax.swing.JPanel {
                 .addComponent(NoteNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -260,14 +258,14 @@ public class NotesPanel extends javax.swing.JPanel {
 
         NoteNameLabel.setText(selectedNote);
 
-        //Sets the current file by gettings the note by name chosen by the user
-        currentFile = VaultManager.findNoteByName(selectedNote);
+        //Sets the current note by gettings the note by name chosen by the user
+        currentNote = VaultManager.findNoteByName(selectedNote);
 
         //StringBuilders are better than strings when repedelty adding text to a String
         StringBuilder builder = new StringBuilder();
 
-        //Goes through every line of the current file chosen and adds it to the builder
-        for (String line : currentFile.contents) {
+        //Goes through every line of the current note chosen and adds it to the builder
+        for (String line : currentNote.contents) {
             builder.append(line);
         }
 
@@ -283,11 +281,11 @@ public class NotesPanel extends javax.swing.JPanel {
     private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
         //Tries to save the note
         try {
-            //Sets the current file contents to what was typed in by the user.
-            currentFile.contents = Arrays.asList(NoteContentsField.getText().split(""));
+            //Sets the current note's contents to what was typed in by the user.
+            currentNote.contents = Arrays.asList(NoteContentsField.getText().split(""));
 
-            //Saves the file that was just edited
-            FileManager.saveFile(currentFile);
+            //Saves the note that was just edited
+            FileManager.saveFile(currentNote);
 
         } catch (IOException ex) {
             //If it cant then display show an error notifcation to the user
@@ -310,9 +308,9 @@ public class NotesPanel extends javax.swing.JPanel {
         //Tries to delete the note
         try {
             //Deletes the note
-            FileManager.deleteFile(currentFile);
+            FileManager.deleteFile(currentNote);
 
-            //Reloads the Vault's files
+            //Reloads the Vault's note files
             VaultManager.loadFiles();
 
             //Sends a notification to the user that the deletion was a success
@@ -340,9 +338,9 @@ public class NotesPanel extends javax.swing.JPanel {
 
         try {
             //Creates a note in the vault's folder.
-            currentFile = FileManager.createFile(newNoteName);
-            //Adds the file to the vault's files
-            VaultManager.addFile(currentFile);
+            currentNote = FileManager.createFile(newNoteName);
+            //Adds the note to the vault's notes
+            VaultManager.addFile(currentNote);
 
             Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, "Sucessfully created the note");
         } catch (IOException ex) {

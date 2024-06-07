@@ -15,16 +15,13 @@ public class Vault {
     //The name of the vault
     public String name;
 
-    //All the journal files in the vault
-    public List<JournalFile> files;
-
-    //The current journal note being viewed
-    public JournalFile currentNote;
+    //All the journal notes in the vault
+    public List<JournalNote> notes;
 
     public Vault(String name) {
 
         this.name = name;
-        files = new ArrayList<JournalFile>();
+        notes = new ArrayList<JournalNote>();
 
         try {
             loadFiles();
@@ -32,21 +29,21 @@ public class Vault {
         }
     }
 
-    //Loads the journal files for this vault
+    //Loads the journal notes for this vault
     public void loadFiles() throws IOException {
-        //Loads the files' names
-        List<String> fileNames = FileManager.loadVaultFiles(name);
+        //Loads the notes' names
+        List<String> fileNames = FileManager.loadVaultFileNames(name);
 
-        //Removes all the current files that are in the list
-        files.removeAll(files);
+        //Removes all the current notes that are in the list
+        notes.removeAll(notes);
 
         //For every fileName in the list returned
         for (String fileName : fileNames) {
-            //Create a new JournalFile instance and, passing in this vault
-            var journalFile = new JournalFile(fileName, FileManager.loadFileContents("Vaults/" + name + "/" + fileName), this);
+            //Create a new JournalNote instance and, passing in this vault
+            var journalFile = new JournalNote(fileName, FileManager.loadFileContents("Vaults/" + name + "/" + fileName), this);
 
-            //Add the JournalFile to the list
-            files.add(journalFile);
+            //Add the JournalNote to the list
+            notes.add(journalFile);
         }
     }
 }

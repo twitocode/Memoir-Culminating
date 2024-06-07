@@ -14,7 +14,7 @@ import java.util.List;
 public class VaultManager {
 
     //A list for storing all loade vaults
-    public static List<Vault> vaults = new ArrayList<Vault>();
+    public static List<Vault> vaults = new ArrayList<>();
 
     //The current vault being viewed. This is private so no other classes can use
     private static Vault _current;
@@ -51,10 +51,10 @@ public class VaultManager {
     }
 
     //Finds a note in the currentVault by name
-    public static JournalFile findNoteByName(String name) {
-        //Loops through all of th vaults files and checks if
+    public static JournalNote findNoteByName(String name) {
+        //Loops through all of th vaults notes and checks if
         //The name is the same as the one passed in
-        for (var f : _current.files) {
+        for (var f : _current.notes) {
             if (f.name.equals(name)) {
                 return f;
             }
@@ -73,18 +73,18 @@ public class VaultManager {
         return _current;
     }
 
-    //Returns the vault's files
-    public static List<JournalFile> getFiles() {
-        return _current.files;
+    //Returns the vault's notes
+    public static List<JournalNote> getFiles() {
+        return _current.notes;
     }
 
-    //Laads the vault's files
+    //Laads the vault's notes
     public static void loadFiles() throws IOException {
         _current.loadFiles();
     }
 
     //Adds a file to the vault
-    public static void addFile(JournalFile file) {
-        _current.files.add(file);
+    public static void addFile(JournalNote file) {
+        _current.notes.add(file);
     }
 }

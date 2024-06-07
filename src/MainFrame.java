@@ -5,6 +5,7 @@ June 7, 2024
 This class is the main frame that renders the program
 It hands changing between the 3 panels (Vault, Notes, and Search) for a page-lke experience
  */
+import com.formdev.flatlaf.IntelliJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatArcDarkIJTheme;
 import raven.toast.Notifications;
 
@@ -77,10 +78,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     //This is a special version of the setPanel function.
     //This one is used when the user clicks on a search result on the search page
-    //This will display the file that was chosen in the search on the notesPanel screen.
+    //This will display the note that was chosen in the search on the notesPanel screen.
     //Instead of displaying "No note chosen"
-    public void setNotesPanelWithResult(JournalFile result) {
-        notesPanel.currentFile = result;
+    public void setNotesPanelWithResult(JournalNote result) {
+        notesPanel.currentNote = result;
         setPanel("Notes");
     }
 
@@ -125,7 +126,8 @@ public class MainFrame extends javax.swing.JFrame {
     public static void main(String args[]) {
         //Custom Look and feel for swing, the default was ugly.
         //This is an external library
-        FlatArcDarkIJTheme.setup();
+        //FlatArcDarkIJTheme.setup();
+        IntelliJTheme.setup(MainFrame.class.getResourceAsStream("/ristretto.theme.json"));
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

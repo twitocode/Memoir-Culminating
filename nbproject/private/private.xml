@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Rocket/Desktop/Files/Code/Java/Memoir-Culminating/src/FileManager.java</file>
-            <file>file:/C:/Users/Rocket/Desktop/Files/Code/Java/Memoir-Culminating/src/SearchPanel.java</file>
-            <file>file:/C:/Users/Rocket/Desktop/Files/Code/Java/Memoir-Culminating/src/VaultPanel.java</file>
-            <file>file:/C:/Users/Rocket/Desktop/Files/Code/Java/Memoir-Culminating/src/NotesPanel.java</file>
-            <file>file:/C:/Users/Rocket/Desktop/Files/Code/Java/Memoir-Culminating/src/MainFrame.java</file>
+            <file>file:/C:/Users/tohee/Documents/Code/Java/Memoir-Culminating/src/VaultManager.java</file>
+            <file>file:/C:/Users/tohee/Documents/Code/Java/Memoir-Culminating/src/NotesPanel.java</file>
+            <file>file:/C:/Users/tohee/Documents/Code/Java/Memoir-Culminating/src/VaultPanel.java</file>
+            <file>file:/C:/Users/tohee/Documents/Code/Java/Memoir-Culminating/src/Vault.java</file>
         </group>
     </open-files>
 </project-private>
