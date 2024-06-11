@@ -128,6 +128,7 @@ public class NotesPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(NotesList);
 
         ReturnToVaultButton.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
+        ReturnToVaultButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/icons8-left-arrow-32.png"))); // NOI18N
         ReturnToVaultButton.setText("Back to Vaults");
         ReturnToVaultButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -136,7 +137,8 @@ public class NotesPanel extends javax.swing.JPanel {
         });
 
         CreateNoteButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        CreateNoteButton.setText("Create Note");
+        CreateNoteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/icons8-create-32.png"))); // NOI18N
+        CreateNoteButton.setText("New Note");
         CreateNoteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CreateNoteButtonActionPerformed(evt);
@@ -174,6 +176,7 @@ public class NotesPanel extends javax.swing.JPanel {
         );
 
         NoteNameLabel.setFont(new java.awt.Font("Roboto Light", 0, 24)); // NOI18N
+        NoteNameLabel.setForeground(java.awt.Color.white);
         NoteNameLabel.setText("No note selected");
 
         NoteContentsField.setColumns(20);
@@ -184,6 +187,7 @@ public class NotesPanel extends javax.swing.JPanel {
         SaveButton.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.focusedBorderColor"));
         SaveButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         SaveButton.setForeground(java.awt.Color.white);
+        SaveButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/icons8-save-32.png"))); // NOI18N
         SaveButton.setText("Save");
         SaveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -194,6 +198,7 @@ public class NotesPanel extends javax.swing.JPanel {
         DeleteButton.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Red"));
         DeleteButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         DeleteButton.setForeground(java.awt.Color.white);
+        DeleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/icons8-trash-32.png"))); // NOI18N
         DeleteButton.setText("Delete");
         DeleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -202,7 +207,7 @@ public class NotesPanel extends javax.swing.JPanel {
         });
 
         SearchButton.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        SearchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/icons8-search-30 (1).png"))); // NOI18N
+        SearchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/icons8-search-32.png"))); // NOI18N
         SearchButton.setText("Search");
         SearchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -292,18 +297,20 @@ public class NotesPanel extends javax.swing.JPanel {
             //Saves the note that was just edited
             FileManager.saveFile(currentNote);
 
+            //Display a success notification to the user
+            Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, "Sucessfully saved the note");
         } catch (IOException ex) {
             //If it cant then display show an error notifcation to the user
             Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT, "Could not save note");
-        } finally {
-            //Otherwise display a success notification to the user
-            Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, "Sucessfully saved the note");
         }
     }//GEN-LAST:event_SaveButtonActionPerformed
 
     //The runs when the user wants to go back to the vault page
     private void ReturnToVaultButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReturnToVaultButtonActionPerformed
         reset();
+        //Sets the current vault to nothing
+        VaultManager.setNone();
+
         ParentFrame.setPanel("Vaults");
     }//GEN-LAST:event_ReturnToVaultButtonActionPerformed
 

@@ -86,6 +86,10 @@ public class VaultManager {
     //Adds a file to the vault
     public static void addFile(JournalNote file) {
         _current.notes.add(file);
+    }
 
+    //Sets the current vault to nothing
+    public static void setNone() {
+        _current = null;
     }
 }

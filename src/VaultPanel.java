@@ -76,6 +76,7 @@ public class VaultPanel extends javax.swing.JPanel {
         jScrollPane2.setViewportView(VaultList);
 
         CreateVaultButton.setFont(new java.awt.Font("Roboto Light", 0, 12)); // NOI18N
+        CreateVaultButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/icons8-plus-32.png"))); // NOI18N
         CreateVaultButton.setText("New Vault");
         CreateVaultButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -84,7 +85,7 @@ public class VaultPanel extends javax.swing.JPanel {
         });
 
         SearchButton.setFont(new java.awt.Font("Roboto Light", 0, 12)); // NOI18N
-        SearchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/icons8-search-30 (1).png"))); // NOI18N
+        SearchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/icons8-search-32.png"))); // NOI18N
         SearchButton.setText("Notes Search");
         SearchButton.setMaximumSize(new java.awt.Dimension(37, 37));
         SearchButton.setMinimumSize(new java.awt.Dimension(37, 37));
@@ -114,8 +115,8 @@ public class VaultPanel extends javax.swing.JPanel {
                     .addComponent(jLabel2)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 526, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(CreateVaultButton, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(CreateVaultButton)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(SearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(246, Short.MAX_VALUE))

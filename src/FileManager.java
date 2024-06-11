@@ -32,6 +32,10 @@ public class FileManager {
 
         var directoryPath = new File("Vaults");
 
+        if (!directoryPath.exists()) {
+            return new ArrayList<String>();
+        }
+
         //Gets the name of all the vaults
         File[] files = directoryPath.listFiles();
 
@@ -69,7 +73,7 @@ public class FileManager {
     //Reads the file with the given name and returns a list of each line in the file
     public static List<String> loadFileContents(String fileName) throws FileNotFoundException, IOException {
         //stores the result
-        ArrayList<String> list = new ArrayList<String>();
+        List<String> lines = new ArrayList<String>();
 
         //Creates a new file reader
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
@@ -79,11 +83,11 @@ public class FileManager {
             //Keep running as long as the current the reader reads a line
             while ((line = reader.readLine()) != null) {
                 //Add the line to the list and add a "new line" character for displaying purposes.
-                list.add(line + "\n");
+                lines.add(line + "\n");
             }
         }
 
-        return list;
+        return lines;
     }
 
     //Saves a note given a JournalNote instance

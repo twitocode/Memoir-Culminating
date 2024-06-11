@@ -5,6 +5,7 @@ June 7, 2024
 This class is responsible for allowing the user to search for any note in
 all of their vaults at once.
  */
+import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
@@ -26,6 +27,7 @@ public class SearchPanel extends javax.swing.JPanel {
     public SearchPanel(MainFrame parent) {
         initComponents();
 
+        //Sets the parent frame to the one passed in 
         ParentFrame = parent;
 
         //Calls the onInit function
@@ -41,10 +43,8 @@ public class SearchPanel extends javax.swing.JPanel {
         //Selected a vault.
         if (VaultManager.get() == null) {
             BackToNotesButton.setEnabled(false);
-            BackToNotesButton.setText("");
         } else {
             BackToNotesButton.setEnabled(true);
-            BackToNotesButton.setText("Back to Notes");
         }
     }
 
@@ -61,10 +61,22 @@ public class SearchPanel extends javax.swing.JPanel {
         BackToVaultsButton = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Roboto Light", 0, 36)); // NOI18N
+        jLabel1.setForeground(java.awt.Color.white);
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Search");
 
         SearchField.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        SearchField.setForeground(java.awt.Color.gray);
+        SearchField.setText("Enter nothing to show all notes");
+        SearchField.setToolTipText("");
+        SearchField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                SearchFieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                SearchFieldFocusLost(evt);
+            }
+        });
         SearchField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SearchFieldActionPerformed(evt);
@@ -72,6 +84,7 @@ public class SearchPanel extends javax.swing.JPanel {
         });
 
         jLabel2.setFont(new java.awt.Font("Roboto Light", 0, 14)); // NOI18N
+        jLabel2.setForeground(java.awt.Color.white);
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Search for any note across all your vaults");
         jLabel2.setToolTipText("");
@@ -86,7 +99,9 @@ public class SearchPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(SearchList);
 
         BackToNotesButton.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        BackToNotesButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/icons8-arrow-right-32.png"))); // NOI18N
         BackToNotesButton.setText("Back to Notes");
+        BackToNotesButton.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         BackToNotesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BackToNotesButtonActionPerformed(evt);
@@ -94,6 +109,7 @@ public class SearchPanel extends javax.swing.JPanel {
         });
 
         BackToVaultsButton.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        BackToVaultsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/icons8-left-arrow-32.png"))); // NOI18N
         BackToVaultsButton.setText("Back to Vaults");
         BackToVaultsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,11 +125,11 @@ public class SearchPanel extends javax.swing.JPanel {
                 .addGap(107, 107, 107)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(BackToVaultsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(BackToVaultsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(BackToNotesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(BackToNotesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(SearchField)
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE)
@@ -181,6 +197,9 @@ public class SearchPanel extends javax.swing.JPanel {
 
     //Takes the user back to the vault page
     private void BackToVaultsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackToVaultsButtonActionPerformed
+        //Sets the current vault to nothing
+        VaultManager.setNone();
+
         ParentFrame.setPanel("Vaults");
     }//GEN-LAST:event_BackToVaultsButtonActionPerformed
 
@@ -188,6 +207,22 @@ public class SearchPanel extends javax.swing.JPanel {
     private void BackToNotesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackToNotesButtonActionPerformed
         ParentFrame.setPanel("Notes");
     }//GEN-LAST:event_BackToNotesButtonActionPerformed
+
+    //Removes placeholder text if the user clicks on the search field
+    private void SearchFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_SearchFieldFocusGained
+        if (SearchField.getText().equals("Enter nothing to show all notes")) {
+            SearchField.setText("");
+            SearchField.setForeground(Color.white);
+        }
+    }//GEN-LAST:event_SearchFieldFocusGained
+
+    //Brings back the placeholder text if the user clicks on the search field
+    private void SearchFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_SearchFieldFocusLost
+        if (SearchField.getText().equals("")) {
+            SearchField.setText("Enter nothing to show all notes");
+            SearchField.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_SearchFieldFocusLost
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackToNotesButton;
